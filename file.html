@@ -10,11 +10,11 @@
 	<style>
 		/* Schrijf hier gewoon je CSS voor dit component */
 		input {
-
 			opacity: 0;
 			overflow: hidden;
 			position: absolute;
 			z-index: -1;
+			cursor: pointer;
 		}
 
 		label {
@@ -29,6 +29,7 @@
 			margin: 1em;
 			justify-content: center;
 			align-items: center;
+			cursor: pointer;
 		}
 
 		li {
@@ -40,15 +41,36 @@
 			margin-left: 1em;
 		}
 
+		img {
+			max-width: 180px;
+		}
+
+		input[type=file] {
+			padding: 10px;
+			background: #2d2d2d;
+		}
+
 
 		/* Hint: Denk niet te ingewikkeld */
 	</style>
 	<script type="module">
 		/* Schrijf hier eventueel je client-side JavaScript */
-
 		/* Hint: Met een paar regels kom je al een heel eind */
-
 		/* Hint: Via JS kun je Custom Properties in CSS aanpassen */
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function (e) {
+					$('#picture')
+						.attr('src', e.target.result);
+				};
+
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+
 	</script>
 </head>
 
@@ -62,7 +84,8 @@
 		<!-- Hint: Denk niet te ingewikkeld -->
 		<li>
 			<label for="file">Selecteer je afbeelding</label>
-			<input type="file" name="file" id="file">
+			<input type="file" name="file" id="file" onchange="readURL(this);" /></input>
+			<img id="picture" src="http://placehold.it/180" alt="your image" /></img>
 		</li>
 
 		<button type="submit" class="fdnd-button">Uploaden</button>
